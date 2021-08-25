@@ -1,6 +1,7 @@
 package com.dzyls.chat.server;
 
 import com.dzyls.chat.server.handler.IdleChannelCloseHandler;
+import com.dzyls.chat.server.handler.MessageDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
@@ -10,8 +11,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +54,7 @@ public class ChatServer {
         stopWatch.start();
         startServer();
         stopWatch.stop();
-        stopWatch.getTotalTimeMillis();
-        LOGGER.info("start server success , elapsed time: {}ms", stopWatch.getTotalTimeMillis());
+        LOGGER.info("start server success , port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
     }
 
     @PreDestroy
@@ -102,6 +100,7 @@ public class ChatServer {
     private void addCodecs(ChannelPipeline pipeline){
         pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
         pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
+        pipeline.addLast("messageDecoder",new MessageDecoder());
     }
 
     private void addIdleHandler(ChannelPipeline pipeline) {
