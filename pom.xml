@@ -20,6 +20,7 @@
         <spring.version>2.5.4</spring.version>
         <netty.version>4.1.67.Final</netty.version>
         <hutool.version>5.7.9</hutool.version>
+        <kryo.version>5.2.0</kryo.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
@@ -59,6 +60,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.esotericsoftware/kryo -->
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>${kryo.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
