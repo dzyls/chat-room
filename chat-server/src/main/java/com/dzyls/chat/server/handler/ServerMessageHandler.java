@@ -1,11 +1,11 @@
 package com.dzyls.chat.server.handler;
 
 import com.dzyls.chat.annotate.HandleType;
+import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.handler.RequestHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +22,7 @@ import java.util.Map;
  * @Description:
  */
 @Component
+@HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
 public class ServerMessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
 
     @Resource

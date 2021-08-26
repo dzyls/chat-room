@@ -1,5 +1,6 @@
 package com.dzyls.chat.server.handler;
 
+import com.dzyls.chat.annotate.HandlerOrder;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,6 +9,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -15,6 +17,8 @@ import org.slf4j.LoggerFactory;
  * @Version 1.0.0
  * @Description:
  */
+@Component
+@HandlerOrder(order = 1)
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
 
     /**

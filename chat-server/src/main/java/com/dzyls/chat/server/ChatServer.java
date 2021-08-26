@@ -2,6 +2,7 @@ package com.dzyls.chat.server;
 
 import com.dzyls.chat.server.handler.IdleChannelCloseHandler;
 import com.dzyls.chat.server.handler.MessageDecoder;
+import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
@@ -20,6 +21,8 @@ import org.springframework.util.StopWatch;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,11 +51,15 @@ public class ChatServer {
 
     private int idleTime = 10000;
 
+    @Resource
+    private List<ChannelHandler> channelHandlerList;
+
     @PostConstruct
     public void init() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         startServer();
+        channelHandlerList.sort(HandlerOrderComparator.INSTANCE);
         stopWatch.stop();
         LOGGER.info("start server success , port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
     }
@@ -101,13 +108,14 @@ public class ChatServer {
         pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
         pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
         pipeline.addLast("messageDecoder",new MessageDecoder());
+        IdleStateHandler idleStateHandler = new IdleStateHandler(0, 0, idleTime, TimeUnit.MILLISECONDS);
+        pipeline.addLast("idleStateHandler",idleStateHandler);
     }
 
     private void addIdleHandler(ChannelPipeline pipeline) {
-        IdleStateHandler idleStateHandler = new IdleStateHandler(0, 0, idleTime, TimeUnit.MILLISECONDS);
-        ChannelDuplexHandler idleChannelCloseHandler = new IdleChannelCloseHandler();
-        pipeline.addLast("idleStateHandler", idleStateHandler);
-        pipeline.addLast("idleChannelCloseHandler", idleChannelCloseHandler);
+        for (ChannelHandler channelHandler : channelHandlerList) {
+            pipeline.addLast(channelHandler.getClass().getSimpleName(), channelHandler);
+        }
     }
 
     /**
