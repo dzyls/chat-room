@@ -58,7 +58,7 @@ public class ChatServer {
     }
 
     @PreDestroy
-    public void destory() {
+    public void destroy() {
         shutdownGracefully(boss);
         shutdownGracefully(worker);
         LOGGER.info("close chat server");

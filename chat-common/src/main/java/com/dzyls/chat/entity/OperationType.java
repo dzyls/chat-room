@@ -1,4 +1,4 @@
-package com.dzyls.chat.common;
+package com.dzyls.chat.entity;
 
 import java.util.HashMap;
 import java.util.Map;
