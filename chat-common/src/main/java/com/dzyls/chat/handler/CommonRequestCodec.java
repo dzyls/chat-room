@@ -1,9 +1,10 @@
-package com.dzyls.chat.server.handler;
+package com.dzyls.chat.handler;
 
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.util.KryoUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,9 @@ public class CommonRequestCodec extends ByteToMessageCodec<CommonRequest> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, CommonRequest msg, ByteBuf out) throws Exception {
-        out.writeBytes(KryoUtil.kryoSerialize(msg));
+        byte[] bytes = KryoUtil.kryoSerialize(msg);
+        out.writeBytes(bytes);
+        ctx.writeAndFlush(out);
     }
 
     @Override

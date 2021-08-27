@@ -1,11 +1,14 @@
 package com.dzyls.chat.client.handler;
 
+import com.dzyls.chat.entity.CommonRequest;
+import com.dzyls.chat.util.KryoUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.CharsetUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -24,10 +27,10 @@ public class HeartBeatHandler extends ByteToMessageDecoder {
         int readableBytes = byteBuf.readableBytes();
         byte []bs = new byte[readableBytes];
         byteBuf.getBytes(readerIndex,bs);
-        String msg = new String(bs);
-        System.out.println(msg);
+        CommonRequest commonRequest = KryoUtil.kryoDeserialize(bs, CommonRequest.class);
+        System.out.println(commonRequest.getMessage());
         byteBuf.skipBytes(readableBytes);
-        out.add(msg);
+        out.add(commonRequest);
     }
 
 }

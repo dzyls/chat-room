@@ -15,7 +15,6 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
-@Builder
 public class CommonRequest {
 
     private OperationType operationType;

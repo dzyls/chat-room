@@ -1,15 +1,14 @@
-package com.dzyls.chat.server.handler;
+package com.dzyls.chat.handler;
 
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @HandlerOrder(order = 1)
+@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "server")
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
 
     /**
@@ -41,7 +41,7 @@ public class IdleChannelCloseHandler extends ChannelDuplexHandler {
                 //ctx.close();
             }
             CommonRequest heartBeatMessage = CommonRequest.generateSendRequest("heart beat message");
-            ctx.writeAndFlush(heartBeatMessage);
+            ctx.writeAndFlush("Hello");
             //LOG.info("Idle channel close.");
         }
     }

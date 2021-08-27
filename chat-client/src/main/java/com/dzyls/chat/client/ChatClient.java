@@ -1,6 +1,8 @@
 package com.dzyls.chat.client;
 
 import com.dzyls.chat.client.handler.HeartBeatHandler;
+import com.dzyls.chat.entity.CommonRequest;
+import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -20,6 +22,8 @@ import org.springframework.util.StopWatch;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,10 +47,14 @@ public class ChatClient {
 
     private static Thread monitorThread;
 
+    @Resource
+    private List<ChannelHandler> channelHandlerList;
+
     @PostConstruct
     public void init(){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+        channelHandlerList.sort(HandlerOrderComparator.INSTANCE);
         startClient();
         startMonitorThread();
         stopWatch.stop();
@@ -72,12 +80,15 @@ public class ChatClient {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
                             pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
+
+                            pipeline.addLast("messageDecoder",new HeartBeatHandler());
+                            addChannelHandler(pipeline);
                             // 加入自己的处理器
                             pipeline.addLast(new ChannelInboundHandlerAdapter(){
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                     super.channelActive(ctx);
-                                    ctx.writeAndFlush(Unpooled.copiedBuffer("Hello Sever", CharsetUtil.UTF_8));
+                                    ctx.writeAndFlush(CommonRequest.generateSendRequest("Hello Server"));
                                 }
 
                                 @Override
@@ -86,8 +97,6 @@ public class ChatClient {
                                     LOGGER.error("",cause);
                                 }
                             });
-
-                            pipeline.addLast("heartBeatHandler",new HeartBeatHandler());
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).sync();
@@ -99,6 +108,26 @@ public class ChatClient {
         } finally {
             LOGGER.info("close chat client...");
             eventLoopGroup.shutdownGracefully();
+        }
+    }
+
+    /**
+     * add custom channel handler
+     * if custom channel handler is not {@link io.netty.channel.ChannelHandler.Sharable}
+     * will create new bean by reflection
+     * @param pipeline
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private void addChannelHandler(ChannelPipeline pipeline) throws InstantiationException, IllegalAccessException {
+        for (ChannelHandler channelHandler : channelHandlerList) {
+            Class<? extends ChannelHandler> handlerClass = channelHandler.getClass();
+            ChannelHandler.Sharable sharable = handlerClass.getAnnotation(ChannelHandler.Sharable.class);
+            if (sharable == null){
+                pipeline.addLast(handlerClass.getSimpleName(),handlerClass.newInstance());
+                continue;
+            }
+            pipeline.addLast(handlerClass.getSimpleName(), channelHandler);
         }
     }
 

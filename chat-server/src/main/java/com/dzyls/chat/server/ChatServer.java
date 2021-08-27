@@ -1,6 +1,6 @@
 package com.dzyls.chat.server;
 
-import com.dzyls.chat.server.handler.CommonRequestCodec;
+import com.dzyls.chat.handler.CommonRequestCodec;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -51,7 +51,7 @@ public class ChatServer implements ApplicationContextAware {
 
     private int backlog = 1024;
 
-    private int idleTime = 10000;
+    private int idleTime = 10;
 
     private ApplicationContext applicationContext;
 

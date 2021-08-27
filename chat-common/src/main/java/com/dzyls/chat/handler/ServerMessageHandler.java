@@ -1,10 +1,9 @@
-package com.dzyls.chat.server.handler;
+package com.dzyls.chat.handler;
 
 import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
-import com.dzyls.chat.handler.CommonRequestHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
