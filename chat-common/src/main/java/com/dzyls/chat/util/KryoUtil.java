@@ -1,5 +1,7 @@
 package com.dzyls.chat.util;
 
+import com.dzyls.chat.entity.CommonRequest;
+import com.dzyls.chat.entity.OperationType;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.ByteBufferInput;
@@ -29,6 +31,8 @@ public class KryoUtil {
             kryo.register(UUID.class, uuidSerializer);
             JavaSerializer serializer = new JavaSerializer();
             kryo.register(ReentrantReadWriteLock.class,serializer);
+            kryo.register(CommonRequest.class);
+            kryo.register(OperationType.class);
             return kryo;
         }
     };
@@ -74,8 +78,8 @@ public class KryoUtil {
     }
 
     public static void main(String[] args) {
-        byte[] bytes = KryoUtil.kryoSerialize("123");
-        System.out.println(KryoUtil.kryoDeserialize(bytes, String.class));
+        byte[] bytes = KryoUtil.kryoSerialize(CommonRequest.generateSendRequest("123"));
+        System.out.println(KryoUtil.kryoDeserialize(bytes, CommonRequest.class));
     }
 
 }

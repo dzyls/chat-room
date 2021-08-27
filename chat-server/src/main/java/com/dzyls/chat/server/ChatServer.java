@@ -1,5 +1,6 @@
 package com.dzyls.chat.server;
 
+import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.handler.CommonRequestCodec;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.ServerBootstrap;
@@ -140,6 +141,19 @@ public class ChatServer implements ApplicationContextAware {
             }
             pipeline.addLast(handlerClass.getSimpleName(), channelHandler);
         }
+        // 加入自己的处理器
+        pipeline.addLast(new ChannelDuplexHandler(){
+            @Override
+            public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                super.channelActive(ctx);
+            }
+
+            @Override
+            public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+                super.exceptionCaught(ctx, cause);
+                LOGGER.error("",cause);
+            }
+        });
     }
 
     /**

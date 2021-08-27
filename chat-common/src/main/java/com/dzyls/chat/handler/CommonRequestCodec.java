@@ -25,7 +25,6 @@ public class CommonRequestCodec extends ByteToMessageCodec<CommonRequest> {
     protected void encode(ChannelHandlerContext ctx, CommonRequest msg, ByteBuf out) throws Exception {
         byte[] bytes = KryoUtil.kryoSerialize(msg);
         out.writeBytes(bytes);
-        ctx.writeAndFlush(out);
     }
 
     @Override

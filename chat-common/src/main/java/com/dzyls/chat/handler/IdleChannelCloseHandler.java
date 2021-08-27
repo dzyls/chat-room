@@ -41,7 +41,7 @@ public class IdleChannelCloseHandler extends ChannelDuplexHandler {
                 //ctx.close();
             }
             CommonRequest heartBeatMessage = CommonRequest.generateSendRequest("heart beat message");
-            ctx.writeAndFlush("Hello");
+            ctx.writeAndFlush(heartBeatMessage);
             //LOG.info("Idle channel close.");
         }
     }
