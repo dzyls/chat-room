@@ -3,7 +3,8 @@ package com.dzyls.chat.handler.impl;
 import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
-import com.dzyls.chat.handler.RequestHandler;
+import com.dzyls.chat.handler.CommonRequestHandler;
+import io.netty.channel.ChannelHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -14,8 +15,9 @@ import org.springframework.util.Assert;
  * @Description:
  */
 @Component
-@HandleType(type = OperationType.SEND)
-public class SendRequestHandler implements RequestHandler {
+@HandleType(type = OperationType.MSG)
+@ChannelHandler.Sharable
+public class MsgRequestHandler implements CommonRequestHandler {
     @Override
     public void handle(CommonRequest commonRequest) {
         Assert.notNull(commonRequest,"CommonRequest is null");

@@ -3,7 +3,8 @@ package com.dzyls.chat.handler.impl;
 import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
-import com.dzyls.chat.handler.RequestHandler;
+import com.dzyls.chat.handler.CommonRequestHandler;
+import io.netty.channel.ChannelHandler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @HandleType(type = OperationType.LOGOUT)
-public class LogoutRequestHandler implements RequestHandler {
+@ChannelHandler.Sharable
+public class LogoutRequestHandler implements CommonRequestHandler {
 
     @Override
     public void handle(CommonRequest commonRequest) {

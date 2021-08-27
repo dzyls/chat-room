@@ -12,7 +12,7 @@ import java.util.Map;
 public enum OperationType {
 
     LOGIN(1),
-    SEND(2),
+    MSG(2),
     LOGOUT(3);
 
     private final int index;

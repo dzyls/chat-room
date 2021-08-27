@@ -4,7 +4,8 @@ import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
-import com.dzyls.chat.handler.RequestHandler;
+import com.dzyls.chat.handler.CommonRequestHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.stereotype.Component;
@@ -23,17 +24,18 @@ import java.util.Map;
  */
 @Component
 @HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
+@ChannelHandler.Sharable
 public class ServerMessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
 
     @Resource
-    private List<RequestHandler> requestHandlerList;
+    private List<CommonRequestHandler> commonRequestHandlerList;
 
-    public Map<OperationType,RequestHandler> handlerMap;
+    public Map<OperationType, CommonRequestHandler> handlerMap;
 
     @PostConstruct
     public void init(){
         handlerMap = new HashMap<>();
-        for (RequestHandler handler : requestHandlerList) {
+        for (CommonRequestHandler handler : commonRequestHandlerList) {
             HandleType handleType = handler.getClass().getAnnotation(HandleType.class);
             handlerMap.put(handleType.type(),handler);
         }

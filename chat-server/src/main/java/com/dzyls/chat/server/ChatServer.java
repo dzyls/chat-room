@@ -1,7 +1,6 @@
 package com.dzyls.chat.server;
 
-import com.dzyls.chat.server.handler.IdleChannelCloseHandler;
-import com.dzyls.chat.server.handler.MessageDecoder;
+import com.dzyls.chat.server.handler.CommonRequestCodec;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -15,7 +14,10 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -33,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @ConfigurationProperties(prefix = "server")
-public class ChatServer {
+public class ChatServer implements ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatServer.class);
 
@@ -50,6 +52,8 @@ public class ChatServer {
     private int backlog = 1024;
 
     private int idleTime = 10000;
+
+    private ApplicationContext applicationContext;
 
     @Resource
     private List<ChannelHandler> channelHandlerList;
@@ -77,7 +81,9 @@ public class ChatServer {
         }
     }
 
-
+    /**
+     * start chat server
+     */
     public void startServer() {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         Class<? extends ServerChannel> channelClz = initEventLoopGroup();
@@ -94,7 +100,7 @@ public class ChatServer {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         addCodecs(pipeline);
-                        addIdleHandler(pipeline);
+                        addChannelHandler(pipeline);
                     }
                 });
         try {
@@ -104,17 +110,35 @@ public class ChatServer {
         }
     }
 
+    /**
+     * add common channel handler
+     * @param pipeline
+     */
     private void addCodecs(ChannelPipeline pipeline){
         pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
         pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
-        pipeline.addLast("messageDecoder",new MessageDecoder());
+        pipeline.addLast("messageDecoder",new CommonRequestCodec());
         IdleStateHandler idleStateHandler = new IdleStateHandler(0, 0, idleTime, TimeUnit.MILLISECONDS);
         pipeline.addLast("idleStateHandler",idleStateHandler);
     }
 
-    private void addIdleHandler(ChannelPipeline pipeline) {
+    /**
+     * add custom channel handler
+     * if custom channel handler is not {@link io.netty.channel.ChannelHandler.Sharable}
+     * will create new bean by reflection
+     * @param pipeline
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    private void addChannelHandler(ChannelPipeline pipeline) throws InstantiationException, IllegalAccessException {
         for (ChannelHandler channelHandler : channelHandlerList) {
-            pipeline.addLast(channelHandler.getClass().getSimpleName(), channelHandler);
+            Class<? extends ChannelHandler> handlerClass = channelHandler.getClass();
+            ChannelHandler.Sharable sharable = handlerClass.getAnnotation(ChannelHandler.Sharable.class);
+            if (sharable == null){
+                pipeline.addLast(handlerClass.getSimpleName(),handlerClass.newInstance());
+                continue;
+            }
+            pipeline.addLast(handlerClass.getSimpleName(), channelHandler);
         }
     }
 
@@ -146,4 +170,8 @@ public class ChatServer {
         return channelClz;
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

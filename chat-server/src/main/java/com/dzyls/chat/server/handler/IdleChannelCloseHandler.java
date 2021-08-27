@@ -1,6 +1,7 @@
 package com.dzyls.chat.server.handler;
 
 import com.dzyls.chat.annotate.HandlerOrder;
+import com.dzyls.chat.entity.CommonRequest;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -39,7 +40,8 @@ public class IdleChannelCloseHandler extends ChannelDuplexHandler {
             else if (e.state() == IdleState.ALL_IDLE) {
                 //ctx.close();
             }
-            ctx.writeAndFlush(Unpooled.copiedBuffer("heart beat message", CharsetUtil.UTF_8));
+            CommonRequest heartBeatMessage = CommonRequest.generateSendRequest("heart beat message");
+            ctx.writeAndFlush(heartBeatMessage);
             //LOG.info("Idle channel close.");
         }
     }

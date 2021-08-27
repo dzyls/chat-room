@@ -8,7 +8,7 @@ import com.dzyls.chat.entity.CommonRequest;
  * @Version 1.0.0
  * @Description:
  */
-public interface RequestHandler {
+public interface CommonRequestHandler {
 
     void handle(CommonRequest commonRequest);
 

@@ -1,6 +1,6 @@
 package com.dzyls.chat.entity;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class CommonRequest {
 
     private OperationType operationType;
@@ -31,4 +31,10 @@ public class CommonRequest {
         return paramMap.put(key,value);
     }
 
+    public static CommonRequest generateSendRequest(String message){
+        CommonRequest commonRequest = new CommonRequest();
+        commonRequest.setOperationType(OperationType.MSG);
+        commonRequest.setMessage(message);
+        return commonRequest;
+    }
 }
