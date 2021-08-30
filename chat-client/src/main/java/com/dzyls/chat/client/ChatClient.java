@@ -12,6 +12,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +51,13 @@ public class ChatClient {
     @Resource
     private List<ChannelHandler> channelHandlerList;
 
+    private int idleTime = 10000;
+
     @PostConstruct
     public void init(){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         channelHandlerList.sort(HandlerOrderComparator.INSTANCE);
-        startClient();
         startMonitorThread();
         stopWatch.stop();
         LOGGER.info("start chat client success , server port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
@@ -80,7 +82,8 @@ public class ChatClient {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
                             pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
-
+                            IdleStateHandler idleStateHandler = new IdleStateHandler(0, 0, idleTime, TimeUnit.MILLISECONDS);
+                            pipeline.addLast("idleStateHandler",idleStateHandler);
                             pipeline.addLast("messageDecoder",new HeartBeatHandler());
                             addChannelHandler(pipeline);
                             // 加入自己的处理器
@@ -133,6 +136,7 @@ public class ChatClient {
 
     public void startMonitorThread(){
         monitorThread = new Thread(()->{
+            startClient();
             while (!stop){
                 try {
                     TimeUnit.SECONDS.sleep(10L);

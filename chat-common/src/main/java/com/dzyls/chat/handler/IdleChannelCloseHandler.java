@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @HandlerOrder(order = 1)
-@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "server")
+@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "client")
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
 
     /**
@@ -39,9 +39,9 @@ public class IdleChannelCloseHandler extends ChannelDuplexHandler {
             }
             else if (e.state() == IdleState.ALL_IDLE) {
                 //ctx.close();
+                CommonRequest heartBeatMessage = CommonRequest.generateSendRequest("heart beat message");
+                ctx.writeAndFlush(heartBeatMessage);
             }
-            CommonRequest heartBeatMessage = CommonRequest.generateSendRequest("heart beat message");
-            ctx.writeAndFlush(heartBeatMessage);
             //LOG.info("Idle channel close.");
         }
     }

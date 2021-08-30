@@ -52,7 +52,7 @@ public class ChatServer implements ApplicationContextAware {
 
     private int backlog = 1024;
 
-    private int idleTime = 10;
+    private int idleTime = 10000;
 
     private ApplicationContext applicationContext;
 
@@ -119,8 +119,6 @@ public class ChatServer implements ApplicationContextAware {
         pipeline.addLast("lengthDecoder",new LengthFieldBasedFrameDecoder(1 << 20,0,4,0,4));
         pipeline.addLast("lengthEncoder",new LengthFieldPrepender(4));
         pipeline.addLast("messageDecoder",new CommonRequestCodec());
-        IdleStateHandler idleStateHandler = new IdleStateHandler(0, 0, idleTime, TimeUnit.MILLISECONDS);
-        pipeline.addLast("idleStateHandler",idleStateHandler);
     }
 
     /**
@@ -143,6 +141,17 @@ public class ChatServer implements ApplicationContextAware {
         }
         // 加入自己的处理器
         pipeline.addLast(new ChannelDuplexHandler(){
+
+            @Override
+            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+                super.write(ctx, msg, promise);
+            }
+
+            @Override
+            public void read(ChannelHandlerContext ctx) throws Exception {
+                super.read(ctx);
+            }
+
             @Override
             public void channelActive(ChannelHandlerContext ctx) throws Exception {
                 super.channelActive(ctx);
