@@ -13,7 +13,8 @@ public enum OperationType {
 
     LOGIN(1),
     MSG(2),
-    LOGOUT(3);
+    LOGOUT(3),
+    HEART_BEAT(4);
 
     private final int index;
 

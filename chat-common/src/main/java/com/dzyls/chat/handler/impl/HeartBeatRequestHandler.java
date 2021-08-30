@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
- * @Date 2021/8/26 22:18
+ * @Date 2021/8/30 23:23
  * @Version 1.0.0
  * @Description:
  */
 @Component
-@HandleType(type = OperationType.LOGOUT)
+@HandleType(type = OperationType.HEART_BEAT)
 @ChannelHandler.Sharable
-public class LogoutRequestHandler implements CommonRequestHandler {
+public class HeartBeatRequestHandler implements CommonRequestHandler {
 
     @Override
     public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
-
+        System.out.println("heart beat message from : " + ctx.channel().remoteAddress());
     }
 
 }

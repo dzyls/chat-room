@@ -5,6 +5,7 @@ import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.handler.CommonRequestHandler;
 import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -19,7 +20,7 @@ import org.springframework.util.Assert;
 @ChannelHandler.Sharable
 public class MsgRequestHandler implements CommonRequestHandler {
     @Override
-    public void handle(CommonRequest commonRequest) {
+    public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
         Assert.notNull(commonRequest,"CommonRequest is null");
         System.out.println(commonRequest.getMessage());
     }

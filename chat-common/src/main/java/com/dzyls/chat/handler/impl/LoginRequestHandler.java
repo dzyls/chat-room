@@ -5,6 +5,7 @@ import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.handler.CommonRequestHandler;
 import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class LoginRequestHandler implements CommonRequestHandler {
 
     @Override
-    public void handle(CommonRequest commonRequest) {
+    public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
 
     }
 

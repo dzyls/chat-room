@@ -36,4 +36,11 @@ public class CommonRequest {
         commonRequest.setMessage(message);
         return commonRequest;
     }
+
+    public static CommonRequest generateHeartBeatRequest(String message){
+        CommonRequest commonRequest = new CommonRequest();
+        commonRequest.setOperationType(OperationType.HEART_BEAT);
+        commonRequest.setMessage(message);
+        return commonRequest;
+    }
 }

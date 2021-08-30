@@ -1,6 +1,7 @@
 package com.dzyls.chat.handler;
 
 import com.dzyls.chat.entity.CommonRequest;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -10,6 +11,6 @@ import com.dzyls.chat.entity.CommonRequest;
  */
 public interface CommonRequestHandler {
 
-    void handle(CommonRequest commonRequest);
+    void handle(CommonRequest commonRequest, ChannelHandlerContext ctx);
 
 }

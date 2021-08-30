@@ -42,7 +42,7 @@ public class ServerMessageHandler extends SimpleChannelInboundHandler<CommonRequ
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonRequest msg) throws Exception {
-        handlerMap.get(msg.getOperationType()).handle(msg);
+        handlerMap.get(msg.getOperationType()).handle(msg,ctx);
     }
 
 }
