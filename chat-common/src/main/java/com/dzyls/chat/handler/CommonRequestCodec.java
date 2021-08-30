@@ -28,13 +28,16 @@ public class CommonRequestCodec extends ByteToMessageCodec<CommonRequest> {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        int len = byteBuf.readableBytes();
-        byte []bs = new byte[len];
-        byteBuf.readBytes(bs);
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> list) throws Exception {
+        ByteBuf byteBuf = in;
+        int readerIndex = byteBuf.readerIndex();
+        int readableBytes = byteBuf.readableBytes();
+        byte []bs = new byte[readableBytes];
+        byteBuf.getBytes(readerIndex,bs);
         CommonRequest commonRequest = KryoUtil.kryoDeserialize(bs, CommonRequest.class);
+        System.out.println(commonRequest.getMessage());
+        byteBuf.skipBytes(readableBytes);
         list.add(commonRequest);
-        byteBuf.skipBytes(len);
     }
 
 }

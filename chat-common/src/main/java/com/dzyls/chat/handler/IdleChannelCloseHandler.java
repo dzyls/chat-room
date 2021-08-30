@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @Description:
  */
 @Component
-@HandlerOrder(order = 1)
+@HandlerOrder(order = 3)
 @ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "client")
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
 
