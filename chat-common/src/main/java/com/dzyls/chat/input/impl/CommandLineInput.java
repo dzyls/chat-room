@@ -30,7 +30,7 @@ public class CommandLineInput implements Input{
     private Runnable producer = ()->{
         while (scanner.hasNextLine()) {
             String message = scanner.nextLine();
-            context.writeAndFlush(CommonRequest.generateSendRequest(message));
+            context.writeAndFlush(message);
         }
     };
 
