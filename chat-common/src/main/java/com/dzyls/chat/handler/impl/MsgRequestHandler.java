@@ -19,9 +19,15 @@ import org.springframework.util.Assert;
 @HandleType(type = OperationType.MSG)
 @ChannelHandler.Sharable
 public class MsgRequestHandler implements CommonRequestHandler {
+
+    /**
+     * handle chat message and dispatch
+     * @param commonRequest
+     * @param ctx
+     */
     @Override
     public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
         Assert.notNull(commonRequest,"CommonRequest is null");
-        System.out.println(commonRequest.getMessage());
+        System.out.println(ctx.channel().remoteAddress() +" : "+commonRequest.getMessage());
     }
 }
