@@ -2,6 +2,7 @@ package com.dzyls.chat.client;
 
 import com.dzyls.chat.client.handler.HeartBeatHandler;
 import com.dzyls.chat.entity.CommonRequest;
+import com.dzyls.chat.input.impl.CommandLineInput;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
@@ -92,6 +93,7 @@ public class ChatClient {
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                     super.channelActive(ctx);
                                     ctx.writeAndFlush(CommonRequest.generateSendRequest("Hello Server"));
+                                    new CommandLineInput(ctx).inputMessage();
                                 }
 
                                 @Override
