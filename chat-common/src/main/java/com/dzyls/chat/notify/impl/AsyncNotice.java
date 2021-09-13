@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.concurrent.*;
@@ -25,6 +26,7 @@ public class AsyncNotice implements Notice {
 
     private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
+    @PostConstruct
     public void init(ChatContext chatContext) {
         ExecutorService pool = Executors.newFixedThreadPool(16);
         for (int i = 0; i < 16; i++) {
