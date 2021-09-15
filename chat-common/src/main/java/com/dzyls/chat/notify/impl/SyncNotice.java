@@ -4,11 +4,9 @@ import com.dzyls.chat.annotate.Client;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.entity.ChatMessage;
 import com.dzyls.chat.notify.Notice;
-import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
