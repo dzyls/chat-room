@@ -1,8 +1,11 @@
 package com.dzyls.chat.server;
 
-import com.dzyls.chat.entity.CommonRequest;
+import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.handler.CommonRequestCodec;
+import com.dzyls.chat.notify.Notice;
+import com.dzyls.chat.notify.impl.AsyncNotice;
 import com.dzyls.chat.util.HandlerOrderComparator;
+import com.dzyls.chat.util.RandomUtils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
@@ -12,7 +15,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -26,7 +28,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import static com.dzyls.chat.contants.ChatAttributeKey.CLIENT_NAME_KEY;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -57,7 +60,12 @@ public class ChatServer implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Resource
+    private ChatContext chatContext;
+
+    @Resource
     private List<ChannelHandler> channelHandlerList;
+
+    private Notice asyncNotice;
 
     @PostConstruct
     public void init() {
@@ -88,6 +96,7 @@ public class ChatServer implements ApplicationContextAware {
     public void startServer() {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         Class<? extends ServerChannel> channelClz = initEventLoopGroup();
+        asyncNotice = new AsyncNotice(chatContext);
         serverBootstrap.group(boss, worker)
                 .channel(channelClz)
                 // Nagle off
@@ -155,6 +164,16 @@ public class ChatServer implements ApplicationContextAware {
             @Override
             public void channelActive(ChannelHandlerContext ctx) throws Exception {
                 super.channelActive(ctx);
+                String uuid = RandomUtils.uuid();
+                ctx.channel().attr(CLIENT_NAME_KEY).setIfAbsent(uuid);
+                chatContext.addClient(uuid,ctx);
+            }
+
+            @Override
+            public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+                super.channelInactive(ctx);
+                String uuid  = String.valueOf(ctx.channel().attr(CLIENT_NAME_KEY).get());
+                chatContext.removeClient(uuid);
             }
 
             @Override
