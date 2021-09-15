@@ -27,7 +27,7 @@ public class AsyncNotice implements Notice {
     private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
     @PostConstruct
-    public void init(ChatContext chatContext) {
+    public void init() {
         ExecutorService pool = Executors.newFixedThreadPool(16);
         for (int i = 0; i < 16; i++) {
             pool.execute(messageSender);
