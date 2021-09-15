@@ -22,7 +22,7 @@ import java.util.Map;
  * @Description:
  */
 @Component
-@HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
+@HandlerOrder(order = 5)
 @ChannelHandler.Sharable
 public class MessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
 
