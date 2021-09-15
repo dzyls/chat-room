@@ -1,11 +1,11 @@
 package com.dzyls.chat.notify.impl;
 
+import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
-import org.springframework.scheduling.annotation.Async;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.*;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -15,12 +15,37 @@ import java.util.List;
  */
 public class AsyncNotice implements Notice {
 
-    private List<ChannelHandlerContext> contextList = new ArrayList<>();
+    private ChatContext chatContext;
 
-    @Async
+    private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+
+    public AsyncNotice(ChatContext chatContext) {
+        this.chatContext = chatContext;
+        ExecutorService pool = Executors.newFixedThreadPool(16);
+        for (int i = 0; i < 16; i++) {
+            pool.execute(messageSender);
+        }
+    }
+
     @Override
     public void noticeClient(String message) {
-        contextList.forEach(c ->{
+        messageQueue.offer(message);
+    }
+
+    private Runnable messageSender = ()->{
+        while (true){
+            try {
+                String message = messageQueue.poll(Long.MAX_VALUE, TimeUnit.DAYS);
+                sendMessage(message);
+            } catch (InterruptedException e) {
+                // ignore it
+            }
+        }
+    };
+
+    private void sendMessage(String message){
+        Collection<ChannelHandlerContext> contextCollection = chatContext.getContexts();
+        contextCollection.forEach(c ->{
             c.writeAndFlush(message);
         });
     }
