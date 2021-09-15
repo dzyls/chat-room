@@ -58,6 +58,9 @@ public class ChatClient {
     @Resource
     private ChatContext chatContext;
 
+    @Resource
+    private Notice syncNotice;
+
     private int idleTime = 10000;
 
     @PostConstruct
@@ -82,7 +85,6 @@ public class ChatClient {
         try {
             // Bootstrap
             Bootstrap bootstrap = new Bootstrap();
-            Notice syncNotice = new SyncNotice(chatContext);
             bootstrap.group(eventLoopGroup)
                     .channel(NioSocketChannel.class)
                     .handler(new ChannelInitializer<SocketChannel>() {

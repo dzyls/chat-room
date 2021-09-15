@@ -63,9 +63,10 @@ public class ChatServer implements ApplicationContextAware {
     private ChatContext chatContext;
 
     @Resource
-    private List<ChannelHandler> channelHandlerList;
-
     private Notice asyncNotice;
+
+    @Resource
+    private List<ChannelHandler> channelHandlerList;
 
     @PostConstruct
     public void init() {
@@ -96,7 +97,6 @@ public class ChatServer implements ApplicationContextAware {
     public void startServer() {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         Class<? extends ServerChannel> channelClz = initEventLoopGroup();
-        asyncNotice = new AsyncNotice(chatContext);
         serverBootstrap.group(boss, worker)
                 .channel(channelClz)
                 // Nagle off

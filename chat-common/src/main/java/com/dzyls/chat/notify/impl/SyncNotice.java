@@ -3,7 +3,10 @@ package com.dzyls.chat.notify.impl;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 
 /**
@@ -12,14 +15,12 @@ import java.util.Collection;
  * @Version 1.0.0
  * @Description:
  */
+@Component
+@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "client")
 public class SyncNotice implements Notice {
 
-
+    @Resource
     private ChatContext chatContext;
-
-    public SyncNotice(ChatContext chatContext) {
-        this.chatContext = chatContext;
-    }
 
     @Override
     public void noticeClient(String message) {
