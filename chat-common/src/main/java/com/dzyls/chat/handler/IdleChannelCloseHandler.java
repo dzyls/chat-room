@@ -1,5 +1,6 @@
 package com.dzyls.chat.handler;
 
+import com.dzyls.chat.annotate.Client;
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
 import io.netty.channel.ChannelDuplexHandler;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @HandlerOrder(order = 3)
-@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "client")
+@Client
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
 
     /**

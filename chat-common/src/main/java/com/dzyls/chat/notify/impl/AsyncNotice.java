@@ -1,5 +1,6 @@
 package com.dzyls.chat.notify.impl;
 
+import com.dzyls.chat.annotate.Server;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,7 +19,7 @@ import java.util.concurrent.*;
  * @Description:
  */
 @Component
-@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "server")
+@Server
 public class AsyncNotice implements Notice {
 
     @Resource

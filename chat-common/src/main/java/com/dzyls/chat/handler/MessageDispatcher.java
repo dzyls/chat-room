@@ -1,6 +1,7 @@
 package com.dzyls.chat.handler;
 
 import com.dzyls.chat.annotate.HandlerOrder;
+import com.dzyls.chat.annotate.Server;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.notify.Notice;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 @Component
 @HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
 @ChannelHandler.Sharable
-@ConditionalOnProperty(prefix = "chat",name = "role",havingValue = "server")
+@Server
 public class MessageDispatcher extends SimpleChannelInboundHandler<CommonRequest> {
 
 
