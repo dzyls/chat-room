@@ -3,7 +3,6 @@ package com.dzyls.chat.server;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.handler.CommonRequestCodec;
 import com.dzyls.chat.notify.Notice;
-import com.dzyls.chat.notify.impl.AsyncNotice;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import com.dzyls.chat.util.RandomUtils;
 import io.netty.bootstrap.ServerBootstrap;
