@@ -1,4 +1,4 @@
-package com.dzyls.chat.notice;
+package com.dzyls.chat.notify;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -8,6 +8,6 @@ package com.dzyls.chat.notice;
  */
 public interface Notice {
 
-    void noticeClient();
+    void noticeClient(String message);
 
 }

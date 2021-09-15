@@ -1,8 +1,7 @@
 package com.dzyls.chat.input.impl;
 
-import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.input.Input;
-import io.netty.channel.ChannelHandlerContext;
+import com.dzyls.chat.notify.Notice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,17 +19,17 @@ public class CommandLineInput implements Input{
 
     private Scanner scanner;
 
-    private ChannelHandlerContext context;
+    private Notice notice;
 
-    public CommandLineInput(ChannelHandlerContext context) {
-        this.context = context;
+    public CommandLineInput(Notice notice) {
+        this.notice = notice;
         scanner = new Scanner(System.in);
     }
 
     private Runnable producer = ()->{
         while (scanner.hasNextLine()) {
             String message = scanner.nextLine();
-            context.writeAndFlush(message);
+            notice.noticeClient(message);
         }
     };
 
