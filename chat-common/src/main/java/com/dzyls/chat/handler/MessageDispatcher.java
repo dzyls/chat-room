@@ -34,5 +34,6 @@ public class MessageDispatcher extends SimpleChannelInboundHandler<CommonRequest
         if (operationType == OperationType.MSG){
             notice.noticeClient(msg.getMessage());
         }
+        ctx.fireChannelRead(msg);
     }
 }

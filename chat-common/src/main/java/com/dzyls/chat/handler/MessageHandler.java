@@ -43,6 +43,7 @@ public class MessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CommonRequest msg) throws Exception {
         handlerMap.get(msg.getOperationType()).handle(msg,ctx);
+        ctx.fireChannelRead(msg);
     }
 
 }
