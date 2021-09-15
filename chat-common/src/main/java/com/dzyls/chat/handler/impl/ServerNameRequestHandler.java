@@ -1,6 +1,5 @@
 package com.dzyls.chat.handler.impl;
 
-import com.dzyls.chat.annotate.Client;
 import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.annotate.Server;
 import com.dzyls.chat.contants.ChatAttributeKey;
@@ -9,8 +8,6 @@ import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.handler.CommonRequestHandler;
-import com.dzyls.chat.input.impl.CommandLineInput;
-import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import org.slf4j.Logger;
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Scanner;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
