@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 @HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
 @ChannelHandler.Sharable
-public class ServerMessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
+public class MessageHandler extends SimpleChannelInboundHandler<CommonRequest> {
 
     @Resource
     private List<CommonRequestHandler> commonRequestHandlerList;
