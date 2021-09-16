@@ -28,6 +28,6 @@ public class MsgRequestHandler implements CommonRequestHandler {
     @Override
     public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
         Assert.notNull(commonRequest,"CommonRequest is null");
-        System.out.println(ctx.channel().remoteAddress() +" : "+commonRequest.getMessage());
+        System.out.println(commonRequest.getSender() +" : "+commonRequest.getMessage());
     }
 }

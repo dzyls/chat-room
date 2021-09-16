@@ -1,6 +1,7 @@
 package com.dzyls.chat.handler;
 
 import com.dzyls.chat.annotate.HandlerOrder;
+import com.dzyls.chat.contants.ChatAttributeKey;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.util.KryoUtil;
 import io.netty.buffer.ByteBuf;
@@ -34,6 +35,8 @@ public class CommonRequestCodec extends ByteToMessageCodec<CommonRequest> {
         byteBuf.getBytes(readerIndex,bs);
         CommonRequest commonRequest = KryoUtil.kryoDeserialize(bs, CommonRequest.class);
         byteBuf.skipBytes(readableBytes);
+        String clientName = String.valueOf(channelHandlerContext.channel().attr(ChatAttributeKey.CLIENT_NAME_KEY).get());
+        commonRequest.setSender(clientName);
         list.add(commonRequest);
     }
 
