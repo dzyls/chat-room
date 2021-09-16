@@ -2,14 +2,12 @@ package com.dzyls.chat.notify.impl;
 
 import com.dzyls.chat.annotate.Server;
 import com.dzyls.chat.context.ChatContext;
+import com.dzyls.chat.entity.ChatMessage;
 import com.dzyls.chat.notify.Notice;
-import io.netty.channel.ChannelHandlerContext;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.concurrent.*;
 
 /**
@@ -25,7 +23,7 @@ public class AsyncNotice implements Notice {
     @Resource
     private ChatContext chatContext;
 
-    private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<ChatMessage> messageQueue = new LinkedBlockingQueue<>();
 
     @PostConstruct
     public void init() {
@@ -36,26 +34,21 @@ public class AsyncNotice implements Notice {
     }
 
     @Override
-    public void noticeClient(String message) {
-        messageQueue.offer(message);
+    public void noticeClient(String message,String clientName) {
+        ChatMessage chatMessage = new ChatMessage(clientName, message, System.currentTimeMillis());
+        messageQueue.offer(chatMessage);
     }
 
     private Runnable messageSender = ()->{
         while (true){
             try {
-                String message = messageQueue.poll(Long.MAX_VALUE, TimeUnit.DAYS);
-                sendMessage(message);
+                ChatMessage chatMessage = messageQueue.poll(Long.MAX_VALUE, TimeUnit.DAYS);
+                chatContext.sendMessage(chatMessage);
             } catch (InterruptedException e) {
                 // ignore it
             }
         }
     };
 
-    private void sendMessage(String message){
-        Collection<ChannelHandlerContext> contextCollection = chatContext.getContexts();
-        contextCollection.forEach(c ->{
-            c.writeAndFlush(message);
-        });
-    }
 
 }

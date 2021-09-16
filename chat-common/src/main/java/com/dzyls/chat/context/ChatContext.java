@@ -1,5 +1,6 @@
 package com.dzyls.chat.context;
 
+import com.dzyls.chat.entity.ChatMessage;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 
@@ -17,20 +18,26 @@ public class ChatContext {
 
     private ConcurrentHashMap<String, ChannelHandlerContext> context = new ConcurrentHashMap<>();
 
-    public boolean addClient(String clientName,ChannelHandlerContext channelHandlerContext){
-        if (context.containsKey(clientName)){
+
+    public boolean addClient(String clientName, ChannelHandlerContext channelHandlerContext) {
+        if (context.containsKey(clientName)) {
             return false;
         }
-        context.put(clientName,channelHandlerContext);
+        context.put(clientName, channelHandlerContext);
         return true;
     }
 
-    public ChannelHandlerContext removeClient(String clientName){
+    public ChannelHandlerContext removeClient(String clientName) {
         return context.remove(clientName);
     }
 
-    public Collection<ChannelHandlerContext> getContexts(){
+    public Collection<ChannelHandlerContext> getContextClients() {
         return context.values();
     }
 
+    public void sendMessage(ChatMessage chatMessage) {
+        context.forEach((k, v) -> {
+            v.channel().writeAndFlush(chatMessage);
+        });
+    }
 }

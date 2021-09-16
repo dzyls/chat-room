@@ -8,6 +8,6 @@ package com.dzyls.chat.notify;
  */
 public interface Notice {
 
-    void noticeClient(String message);
+    void noticeClient(String message,String clientName);
 
 }

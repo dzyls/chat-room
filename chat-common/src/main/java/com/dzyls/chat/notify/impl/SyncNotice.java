@@ -2,9 +2,9 @@ package com.dzyls.chat.notify.impl;
 
 import com.dzyls.chat.annotate.Client;
 import com.dzyls.chat.context.ChatContext;
+import com.dzyls.chat.entity.ChatMessage;
 import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,11 +24,9 @@ public class SyncNotice implements Notice {
     private ChatContext chatContext;
 
     @Override
-    public void noticeClient(String message) {
-        Collection<ChannelHandlerContext> contextCollection = chatContext.getContexts();
-        contextCollection.forEach(c ->{
-            c.writeAndFlush(message);
-        });
+    public void noticeClient(String message,String clientName) {
+        ChatMessage chatMessage = new ChatMessage(clientName, message, System.currentTimeMillis());
+        chatContext.sendMessage(chatMessage);
     }
 
 }

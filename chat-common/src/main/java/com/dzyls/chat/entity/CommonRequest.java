@@ -1,6 +1,5 @@
 package com.dzyls.chat.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,8 @@ import java.util.Map;
 public class CommonRequest {
 
     private OperationType operationType;
+
+    private String sender;
 
     private String message;
 
@@ -42,5 +43,11 @@ public class CommonRequest {
         commonRequest.setOperationType(OperationType.HEART_BEAT);
         commonRequest.setMessage(message);
         return commonRequest;
+    }
+
+    public static CommonRequest generateSendRequestWithSender(String message,String sender){
+        CommonRequest request = generateSendRequest(message);
+        request.setSender(sender);
+        return request;
     }
 }

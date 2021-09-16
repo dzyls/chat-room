@@ -29,7 +29,7 @@ public class CommandLineInput implements Input{
     private Runnable producer = ()->{
         while (scanner.hasNextLine()) {
             String message = scanner.nextLine();
-            notice.noticeClient(message);
+            notice.noticeClient(message,null);
         }
     };
 
