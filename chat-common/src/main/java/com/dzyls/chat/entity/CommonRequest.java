@@ -50,4 +50,11 @@ public class CommonRequest {
         request.setSender(sender);
         return request;
     }
+
+    public static CommonRequest generateNameRequest(String name){
+        CommonRequest commonRequest = new CommonRequest();
+        commonRequest.setOperationType(OperationType.NAME);
+        commonRequest.setMessage(name);
+        return commonRequest;
+    }
 }

@@ -10,4 +10,8 @@ public final class ChatConstants {
 
     public static final String CLIENT_NAME = "clientName";
 
+    public static final String loginSuccess = "yes";
+
+    public static final String loginFail = "no";
+
 }

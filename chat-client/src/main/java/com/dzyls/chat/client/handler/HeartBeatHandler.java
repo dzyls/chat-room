@@ -28,7 +28,6 @@ public class HeartBeatHandler extends ByteToMessageDecoder {
         byte []bs = new byte[readableBytes];
         byteBuf.getBytes(readerIndex,bs);
         CommonRequest commonRequest = KryoUtil.kryoDeserialize(bs, CommonRequest.class);
-        System.out.println(commonRequest.getMessage());
         byteBuf.skipBytes(readableBytes);
         out.add(commonRequest);
     }

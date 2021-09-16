@@ -3,21 +3,16 @@ package com.dzyls.chat.client;
 import com.dzyls.chat.client.handler.HeartBeatHandler;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.entity.CommonRequest;
-import com.dzyls.chat.input.impl.CommandLineInput;
 import com.dzyls.chat.notify.Notice;
-import com.dzyls.chat.notify.impl.SyncNotice;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
-import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +24,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -102,9 +98,10 @@ public class ChatClient {
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                     super.channelActive(ctx);
-                                    ctx.writeAndFlush(CommonRequest.generateSendRequest("Hello Server"));
                                     chatContext.addClient("chatServer",ctx);
-                                    new CommandLineInput(syncNotice).inputMessage();
+                                    Scanner scanner = new Scanner(System.in);
+                                    String clientName = scanner.nextLine();
+                                    ctx.writeAndFlush(CommonRequest.generateNameRequest(clientName));
                                 }
 
                                 @Override
