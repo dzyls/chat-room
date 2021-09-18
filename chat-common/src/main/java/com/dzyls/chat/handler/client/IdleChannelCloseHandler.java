@@ -1,4 +1,4 @@
-package com.dzyls.chat.handler;
+package com.dzyls.chat.handler.client;
 
 import com.dzyls.chat.annotate.Client;
 import com.dzyls.chat.annotate.HandlerOrder;

@@ -1,4 +1,4 @@
-package com.dzyls.chat.handler.impl;
+package com.dzyls.chat.handler.common.impl;
 
 import com.dzyls.chat.annotate.HandleType;
 import com.dzyls.chat.annotate.Server;
@@ -7,7 +7,7 @@ import com.dzyls.chat.contants.ChatConstants;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.entity.OperationType;
-import com.dzyls.chat.handler.CommonRequestHandler;
+import com.dzyls.chat.handler.common.CommonRequestHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import org.slf4j.Logger;
