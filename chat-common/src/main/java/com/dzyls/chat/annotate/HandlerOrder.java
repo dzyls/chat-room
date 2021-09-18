@@ -9,9 +9,15 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.TYPE)
 public @interface HandlerOrder {
 
-    public static final int LOWEST_ORDER = Integer.MAX_VALUE;
+    int LOWEST_ORDER = 1 << 10;
 
-    public static final int MAX_ORDER = Integer.MIN_VALUE;
+    int MAX_ORDER = 1;
+
+    int HIGH_ORDER = 1 << 1;
+
+    int MID_ORDER = 1 << 5;
+
+    int LOW_ORDER = 1 << 9;
 
     int order() default LOWEST_ORDER;
 
