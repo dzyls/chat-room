@@ -1,7 +1,7 @@
 package com.dzyls.chat.server;
 
 import com.dzyls.chat.context.ChatContext;
-import com.dzyls.chat.handler.common.CommonRequestCodec;
+import com.dzyls.chat.handler.common.codec.CommonRequestCodec;
 import com.dzyls.chat.notify.Notice;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import com.dzyls.chat.util.RandomUtils;

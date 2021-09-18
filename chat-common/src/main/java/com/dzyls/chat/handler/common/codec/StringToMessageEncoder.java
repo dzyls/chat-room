@@ -1,4 +1,4 @@
-package com.dzyls.chat.handler.common;
+package com.dzyls.chat.handler.common.codec;
 
 import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.entity.CommonRequest;
