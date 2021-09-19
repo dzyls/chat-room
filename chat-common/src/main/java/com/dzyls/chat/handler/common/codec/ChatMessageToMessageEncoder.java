@@ -18,7 +18,7 @@ import java.util.List;
  * @Description:
  */
 @Component
-@HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
+@HandlerOrder(order = HandlerOrder.CODEC_ORDER)
 public class ChatMessageToMessageEncoder extends MessageToMessageEncoder<ChatMessage> {
 
     @Value("${expireTime:3600}")

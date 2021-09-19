@@ -9,9 +9,15 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.TYPE)
 public @interface HandlerOrder {
 
+    /**
+     * for read & write message producer
+     */
     int LOWEST_ORDER = 1 << 10;
 
-    int MAX_ORDER = 1;
+    /**
+     * for codec
+     */
+    int CODEC_ORDER = 1;
 
     int HIGH_ORDER = 1 << 1;
 

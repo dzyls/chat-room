@@ -18,7 +18,7 @@ import java.util.List;
  * @Description:
  */
 @Component
-@HandlerOrder(order = 2)
+@HandlerOrder(order = HandlerOrder.CODEC_ORDER)
 public class CommonRequestCodec extends ByteToMessageCodec<CommonRequest> {
 
     @Override

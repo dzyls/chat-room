@@ -15,7 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Component
-@HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
+@HandlerOrder(order = HandlerOrder.CODEC_ORDER)
 public class StringToMessageEncoder extends MessageToMessageEncoder<String> {
 
     @Override
