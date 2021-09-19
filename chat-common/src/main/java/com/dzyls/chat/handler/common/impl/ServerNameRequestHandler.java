@@ -32,8 +32,6 @@ public class ServerNameRequestHandler implements CommonRequestHandler {
     @Resource
     private ChatContext chatContext;
 
-
-
     @Override
     public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
         String clientName = commonRequest.getMessage();
