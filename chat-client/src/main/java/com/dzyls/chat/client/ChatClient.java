@@ -2,7 +2,6 @@ package com.dzyls.chat.client;
 
 import com.dzyls.chat.client.handler.HeartBeatHandler;
 import com.dzyls.chat.context.ChatContext;
-import com.dzyls.chat.entity.CommonRequest;
 import com.dzyls.chat.notify.Notice;
 import com.dzyls.chat.util.HandlerOrderComparator;
 import io.netty.bootstrap.Bootstrap;
@@ -24,7 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -93,29 +91,6 @@ public class ChatClient {
                             pipeline.addLast("idleStateHandler",idleStateHandler);
                             pipeline.addLast("messageDecoder",new HeartBeatHandler());
                             addChannelHandler(pipeline);
-                            // 加入自己的处理器
-                            pipeline.addLast(new ChannelInboundHandlerAdapter(){
-                                @Override
-                                public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                                    super.channelActive(ctx);
-                                    chatContext.addClient("chatServer",ctx);
-                                    Scanner scanner = new Scanner(System.in);
-                                    String clientName = scanner.nextLine();
-                                    ctx.writeAndFlush(CommonRequest.generateNameRequest(clientName));
-                                }
-
-                                @Override
-                                public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-                                    super.channelInactive(ctx);
-                                    chatContext.removeClient("chatServer");
-                                }
-
-                                @Override
-                                public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-                                    super.exceptionCaught(ctx, cause);
-                                    LOGGER.error("",cause);
-                                }
-                            });
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).sync();
