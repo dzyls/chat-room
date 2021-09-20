@@ -1,5 +1,6 @@
 package com.dzyls.chat.util;
 
+import com.dzyls.chat.annotate.HandlerOrder;
 import io.netty.channel.ChannelHandler;
 
 import java.util.Comparator;
@@ -9,6 +10,7 @@ import java.util.Comparator;
  * @Date 2021/8/26 23:10
  * @Version 1.0.0
  * @Description:
+ * 用于对比处理器的优先级顺序进行加载 {@link HandlerOrder}
  */
 public class HandlerOrderComparator implements Comparator<ChannelHandler> {
 
