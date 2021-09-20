@@ -4,7 +4,6 @@ import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.handler.common.codec.CommonRequestCodec;
 import com.dzyls.chat.notify.Notice;
 import com.dzyls.chat.util.HandlerOrderComparator;
-import com.dzyls.chat.util.RandomUtils;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
@@ -27,8 +26,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
-
-import static com.dzyls.chat.contants.ChatAttributeKey.CLIENT_NAME_KEY;
 
 /**
  * @Author <a href="stringnotnull@gmail.com">dzyls</a>
@@ -147,40 +144,6 @@ public class ChatServer implements ApplicationContextAware {
             }
             pipeline.addLast(handlerClass.getSimpleName(), channelHandler);
         }
-        // 加入自己的处理器
-        pipeline.addLast(new ChannelDuplexHandler(){
-
-            @Override
-            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-                super.write(ctx, msg, promise);
-            }
-
-            @Override
-            public void read(ChannelHandlerContext ctx) throws Exception {
-                super.read(ctx);
-            }
-
-            @Override
-            public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                super.channelActive(ctx);
-                String uuid = RandomUtils.uuid();
-                ctx.channel().attr(CLIENT_NAME_KEY).setIfAbsent(uuid);
-                chatContext.addClient(uuid,ctx);
-            }
-
-            @Override
-            public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-                super.channelInactive(ctx);
-                String uuid  = String.valueOf(ctx.channel().attr(CLIENT_NAME_KEY).get());
-                chatContext.removeClient(uuid);
-            }
-
-            @Override
-            public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-                super.exceptionCaught(ctx, cause);
-                LOGGER.error("",cause);
-            }
-        });
     }
 
     /**

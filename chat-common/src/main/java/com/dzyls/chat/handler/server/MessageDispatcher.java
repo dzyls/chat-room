@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * @Description:
  */
 @Component
-@HandlerOrder(order = HandlerOrder.LOWEST_ORDER)
+@HandlerOrder(order = HandlerOrder.HANDLER_ORDER)
 @ChannelHandler.Sharable
 @Server
 public class MessageDispatcher extends SimpleChannelInboundHandler<CommonRequest> {

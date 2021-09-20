@@ -13,7 +13,7 @@ public class HandlerOrderUtil {
 
     public static final int getOrder(ChannelHandler channelHandler){
         HandlerOrder order = channelHandler.getClass().getAnnotation(HandlerOrder.class);
-        return order == null ? HandlerOrder.LOWEST_ORDER : order.order();
+        return order == null ? HandlerOrder.HANDLER_ORDER : order.order();
     }
 
 }

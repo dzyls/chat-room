@@ -18,19 +18,22 @@ public @interface HandlerOrder {
     /**
      * for read & write message producer
      */
-    int LOWEST_ORDER = 1 << 10;
+    int HANDLER_ORDER = 1 << 10;
 
     /**
      * for codec
      */
     int CODEC_ORDER = 1;
 
-    int HIGH_ORDER = 1 << 1;
+    /**
+     * for check status
+     */
+    int CHECKER_ORDER = 1 << 1;
 
     int MID_ORDER = 1 << 5;
 
     int LOW_ORDER = 1 << 9;
 
-    int order() default LOWEST_ORDER;
+    int order() default HANDLER_ORDER;
 
 }

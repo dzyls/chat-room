@@ -13,6 +13,7 @@ import java.util.List;
  * @Date 2021/9/8 22:28
  * @Version 1.0.0
  * @Description:
+ * String to CommonRequest
  */
 @Component
 @HandlerOrder(order = HandlerOrder.CODEC_ORDER)
