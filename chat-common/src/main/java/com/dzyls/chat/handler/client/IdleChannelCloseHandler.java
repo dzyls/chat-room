@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @Description:
  */
 @Component
-@HandlerOrder(order = 3)
+@HandlerOrder(order = HandlerOrder.SYS_HANDLER_ORDER)
 @Client
 @Log4j2
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {

@@ -30,7 +30,7 @@ public @interface HandlerOrder {
      */
     int CHECKER_ORDER = 1 << 1;
 
-    int MID_ORDER = 1 << 5;
+    int SYS_HANDLER_ORDER = 1 << 5;
 
     int LOW_ORDER = 1 << 9;
 
