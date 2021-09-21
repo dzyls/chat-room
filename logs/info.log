@@ -1,0 +1,6 @@
+[2021-09-18 23:23:19] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatServerApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 4564 (F:\git-space\chat-room\chat-server\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-18 23:23:19] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-18 23:23:19] INFO  com.dzyls.chat.server.ChatServer 172 initEventLoopGroup - use NioEventLoopGroup to handle
+[2021-09-18 23:23:22] INFO  com.dzyls.chat.server.ChatServer 74 init - start server success , port : 8080 , elapsed time: 2670ms
+[2021-09-18 23:23:22] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatServerApplication in 4.142 seconds (JVM running for 7.978)
+[2021-09-18 23:23:30] INFO  com.dzyls.chat.server.ChatServer 81 destroy - close chat server
