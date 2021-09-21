@@ -12,8 +12,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -33,9 +32,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @ConfigurationProperties(prefix = "client")
+@Log4j2
 public class ChatClient {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChatClient.class);
 
     @Value("${server.port:8080}")
     private int port;
@@ -64,7 +62,7 @@ public class ChatClient {
         channelHandlerList.sort(HandlerOrderComparator.INSTANCE);
         startMonitorThread();
         stopWatch.stop();
-        LOGGER.info("start chat client success , server port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
+        log.info("start chat client success , server port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
     }
 
     @PreDestroy
@@ -94,13 +92,13 @@ public class ChatClient {
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).sync();
-            LOGGER.info("chat client is ready...");
+            log.info("chat client is ready...");
             // 监听关闭事件
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-            LOGGER.error("chat client was interrupted , ",e);
+            log.error("chat client was interrupted , ",e);
         } finally {
-            LOGGER.info("close chat client...");
+            log.info("close chat client...");
             eventLoopGroup.shutdownGracefully();
         }
     }

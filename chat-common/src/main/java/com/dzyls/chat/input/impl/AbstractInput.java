@@ -2,8 +2,7 @@ package com.dzyls.chat.input.impl;
 
 import com.dzyls.chat.input.Input;
 import io.netty.channel.ChannelHandlerContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -13,9 +12,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @Version 1.0.0
  * @Description:
  */
+@Log4j2
 public abstract class AbstractInput implements Input {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractInput.class);
 
     protected LinkedBlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
@@ -32,7 +30,7 @@ public abstract class AbstractInput implements Input {
                 message = messageQueue.take();
                 context.writeAndFlush(message);
             } catch (InterruptedException e) {
-                LOGGER.info("exit listen message...");
+                log.info("exit listen message...");
                 break;
             }
         }

@@ -10,8 +10,7 @@ import com.dzyls.chat.entity.OperationType;
 import com.dzyls.chat.handler.common.CommonRequestHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,9 +24,8 @@ import javax.annotation.Resource;
 @Server
 @Component
 @HandleType(type = OperationType.NAME)
+@Log4j2
 public class ServerNameRequestHandler implements CommonRequestHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(ServerNameRequestHandler.class);
 
     @Resource
     private ChatContext chatContext;
@@ -43,7 +41,7 @@ public class ServerNameRequestHandler implements CommonRequestHandler {
         chatContext.removeClient(String.valueOf(attr.get()));
         attr.set(clientName);
         ctx.writeAndFlush(CommonRequest.generateNameRequest(ChatConstants.loginSuccess));
-        logger.info(clientName + " login success");
+        log.info(clientName + " login success");
     }
 
 }

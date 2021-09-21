@@ -7,8 +7,7 @@ import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,12 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 @HandlerOrder(order = 3)
 @Client
+@Log4j2
 public class IdleChannelCloseHandler extends ChannelDuplexHandler {
-
-    /**
-     * Logger for this class
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(IdleChannelCloseHandler.class);
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {

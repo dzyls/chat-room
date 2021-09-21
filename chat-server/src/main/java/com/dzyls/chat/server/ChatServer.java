@@ -13,8 +13,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -35,9 +34,8 @@ import java.util.List;
  */
 @Component
 @ConfigurationProperties(prefix = "server")
+@Log4j2
 public class ChatServer implements ApplicationContextAware {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChatServer.class);
 
     private int port = 8080;
 
@@ -71,14 +69,14 @@ public class ChatServer implements ApplicationContextAware {
         startServer();
         channelHandlerList.sort(HandlerOrderComparator.INSTANCE);
         stopWatch.stop();
-        LOGGER.info("start server success , port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
+        log.info("start server success , port : {} , elapsed time: {}ms", port, stopWatch.getTotalTimeMillis());
     }
 
     @PreDestroy
     public void destroy() {
         shutdownGracefully(boss);
         shutdownGracefully(worker);
-        LOGGER.info("close chat server");
+        log.info("close chat server");
     }
 
     private void shutdownGracefully(EventLoopGroup group) {
@@ -112,7 +110,7 @@ public class ChatServer implements ApplicationContextAware {
         try {
             ChannelFuture future = serverBootstrap.bind(port).sync();
         } catch (InterruptedException e) {
-            LOGGER.error("Chat Server was Interrupted. ", e);
+            log.error("Chat Server was Interrupted. ", e);
         }
     }
 
@@ -159,17 +157,17 @@ public class ChatServer implements ApplicationContextAware {
                 boss = new EpollEventLoopGroup(1);
                 worker = new EpollEventLoopGroup(Runtime.getRuntime().availableProcessors() << 1);
                 channelClz = EpollServerSocketChannel.class;
-                LOGGER.info("use epoll to handle");
+                log.info("use epoll to handle");
                 useEpollSucc = true;
             } catch (UnsatisfiedLinkError e) {
-                LOGGER.warn("Os not support epoll");
+                log.warn("Os not support epoll");
             }
         }
         if (!useEpollSucc) {
             boss = new NioEventLoopGroup();
             worker = new NioEventLoopGroup();
             channelClz = NioServerSocketChannel.class;
-            LOGGER.info("use NioEventLoopGroup to handle");
+            log.info("use NioEventLoopGroup to handle");
         }
         return channelClz;
     }

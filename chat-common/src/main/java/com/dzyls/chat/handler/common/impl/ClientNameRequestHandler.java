@@ -9,8 +9,7 @@ import com.dzyls.chat.handler.common.CommonRequestHandler;
 import com.dzyls.chat.input.impl.CommandLineInput;
 import com.dzyls.chat.notify.Notice;
 import io.netty.channel.ChannelHandlerContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,9 +24,8 @@ import java.util.Scanner;
 @Client
 @Component
 @HandleType(type = OperationType.NAME)
+@Log4j2
 public class ClientNameRequestHandler implements CommonRequestHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(ClientNameRequestHandler.class);
 
     @Resource
     private Notice syncNotice;
@@ -35,7 +33,7 @@ public class ClientNameRequestHandler implements CommonRequestHandler {
     @Override
     public void handle(CommonRequest commonRequest, ChannelHandlerContext ctx) {
         if (ChatConstants.loginSuccess.equals(commonRequest.getMessage())){
-            logger.info("login success.");
+            log.info("login success.");
             new CommandLineInput(syncNotice).inputMessage();
             return;
         }
