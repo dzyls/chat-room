@@ -1,6 +1,58 @@
-[2021-09-18 23:23:19] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatServerApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 4564 (F:\git-space\chat-room\chat-server\target\classes started by Hui in F:\git-space\chat-room)
-[2021-09-18 23:23:19] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
-[2021-09-18 23:23:19] INFO  com.dzyls.chat.server.ChatServer 172 initEventLoopGroup - use NioEventLoopGroup to handle
-[2021-09-18 23:23:22] INFO  com.dzyls.chat.server.ChatServer 74 init - start server success , port : 8080 , elapsed time: 2670ms
-[2021-09-18 23:23:22] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatServerApplication in 4.142 seconds (JVM running for 7.978)
-[2021-09-18 23:23:30] INFO  com.dzyls.chat.server.ChatServer 81 destroy - close chat server
+[2021-09-23 11:28:16] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatServerApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 15744 (F:\git-space\chat-room\chat-server\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:28:16] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:28:17] INFO  com.dzyls.chat.server.ChatServer 170 initEventLoopGroup - use NioEventLoopGroup to handle
+[2021-09-23 11:28:20] INFO  com.dzyls.chat.server.ChatServer 72 init - start server success , port : 8080 , elapsed time: 3158ms
+[2021-09-23 11:28:21] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatServerApplication in 5.221 seconds (JVM running for 9.321)
+[2021-09-23 11:30:07] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 8396 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:30:07] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:30:08] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 1ms
+[2021-09-23 11:30:08] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 1.611 seconds (JVM running for 4.753)
+[2021-09-23 11:30:12] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:30:29] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:30:35] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 2752 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:30:35] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:30:36] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 1ms
+[2021-09-23 11:30:36] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 1.496 seconds (JVM running for 6.131)
+[2021-09-23 11:30:39] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:30:45] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:30:51] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 2868 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:30:51] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:30:52] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 1ms
+[2021-09-23 11:30:52] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 1.806 seconds (JVM running for 4.89)
+[2021-09-23 11:30:55] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:31:10] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:31:18] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 16900 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:31:18] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:31:19] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 1ms
+[2021-09-23 11:31:19] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 1.535 seconds (JVM running for 4.66)
+[2021-09-23 11:31:22] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:32:06] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:33:17] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 3124 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:33:17] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:33:18] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 2ms
+[2021-09-23 11:33:18] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 1.5 seconds (JVM running for 4.604)
+[2021-09-23 11:33:21] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:33:27] INFO  com.dzyls.chat.server.ChatServer 79 destroy - close chat server
+[2021-09-23 11:33:27] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:33:46] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatServerApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 16804 (F:\git-space\chat-room\chat-server\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:33:46] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:33:47] INFO  com.dzyls.chat.server.ChatServer 170 initEventLoopGroup - use NioEventLoopGroup to handle
+[2021-09-23 11:33:50] INFO  com.dzyls.chat.server.ChatServer 72 init - start server success , port : 8080 , elapsed time: 3050ms
+[2021-09-23 11:33:50] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatServerApplication in 4.378 seconds (JVM running for 7.704)
+[2021-09-23 11:34:02] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 14656 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:34:02] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:34:43] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 2ms
+[2021-09-23 11:34:43] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 41.534 seconds (JVM running for 44.942)
+[2021-09-23 11:34:46] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...
+[2021-09-23 11:35:15] INFO  com.dzyls.chat.client.ChatClient 101 startClient - close chat client...
+[2021-09-23 11:35:17] INFO  com.dzyls.chat.server.ChatServer 79 destroy - close chat server
+[2021-09-23 11:35:45] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatServerApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 9408 (F:\git-space\chat-room\chat-server\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:35:45] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:35:46] INFO  com.dzyls.chat.server.ChatServer 170 initEventLoopGroup - use NioEventLoopGroup to handle
+[2021-09-23 11:35:49] INFO  org.springframework.boot.StartupInfoLogger 55 logStarting - Starting ChatClientApplication using Java 1.8.0_171 on LAPTOP-N6DPOKG1 with PID 17852 (F:\git-space\chat-room\chat-client\target\classes started by Hui in F:\git-space\chat-room)
+[2021-09-23 11:35:49] INFO  org.springframework.boot.SpringApplication 659 logStartupProfileInfo - No active profile set, falling back to default profiles: default
+[2021-09-23 11:35:50] INFO  com.dzyls.chat.server.ChatServer 72 init - start server success , port : 8080 , elapsed time: 3883ms
+[2021-09-23 11:35:50] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatServerApplication in 5.919 seconds (JVM running for 8.783)
+[2021-09-23 11:35:52] INFO  com.dzyls.chat.client.ChatClient 65 init - start chat client success , server port : 8080 , elapsed time: 1ms
+[2021-09-23 11:35:52] INFO  org.springframework.boot.StartupInfoLogger 61 logStarted - Started ChatClientApplication in 3.71 seconds (JVM running for 7.14)
+[2021-09-23 11:35:56] INFO  com.dzyls.chat.client.ChatClient 95 startClient - chat client is ready...

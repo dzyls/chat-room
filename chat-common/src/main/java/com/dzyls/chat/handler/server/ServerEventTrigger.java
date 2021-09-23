@@ -5,6 +5,7 @@ import com.dzyls.chat.annotate.Server;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.util.RandomUtils;
 import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import static com.dzyls.chat.contants.ChatAttributeKey.CLIENT_NAME_KEY;
 @Server
 @Component
 @HandlerOrder(order = HandlerOrder.CHECKER_ORDER)
+@ChannelHandler.Sharable
 public class ServerEventTrigger extends ChannelDuplexHandler {
 
     @Resource

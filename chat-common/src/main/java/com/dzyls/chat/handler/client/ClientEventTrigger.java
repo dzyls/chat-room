@@ -5,8 +5,12 @@ import com.dzyls.chat.annotate.HandlerOrder;
 import com.dzyls.chat.context.ChatContext;
 import com.dzyls.chat.entity.CommonRequest;
 import io.netty.channel.ChannelDuplexHandler;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -22,10 +26,13 @@ import java.util.Scanner;
 @Client
 @Component
 @HandlerOrder(order = HandlerOrder.CHECKER_ORDER)
-public class ClientEventTrigger extends ChannelDuplexHandler {
+@ChannelHandler.Sharable
+public class ClientEventTrigger extends ChannelDuplexHandler{
 
     @Resource
     private ChatContext chatContext;
+
+    private BeanFactory beanFactory;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -47,4 +54,5 @@ public class ClientEventTrigger extends ChannelDuplexHandler {
         super.exceptionCaught(ctx, cause);
         log.error("something error : ",cause);
     }
+
 }
